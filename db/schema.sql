@@ -4,7 +4,7 @@ CREATE DATABASE employees_db;
 USE employees_db;
 
 CREATE TABLE all_employees (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  employee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   title TEXT,
@@ -14,15 +14,13 @@ CREATE TABLE all_employees (
 );
 
 CREATE TABLE all_roles (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  title TEXT  
+  job_title VARCHAR(50),
+  job_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  department_name VARCHAR(50),
+  salary INT
 );
 
 CREATE TABLE all_departments (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  title TEXT  
+  department_name VARCHAR(50),
+  department_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
