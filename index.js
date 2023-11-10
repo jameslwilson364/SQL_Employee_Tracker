@@ -33,6 +33,7 @@ const db = mysql.createConnection(
             console.info("You selected View All Employees");
             db.query('SELECT * FROM all_employees', function (err, results) {
                 console.table(results);
+                capture();
               });
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
@@ -44,6 +45,7 @@ const db = mysql.createConnection(
             console.info(userSelection);
             db.query('SELECT * FROM all_roles', function (err, results) {
                 console.table(results);
+                capture();
               });
             
         } else if (userSelection == 'Add Role') {
@@ -53,6 +55,7 @@ const db = mysql.createConnection(
             console.info(userSelection);
             db.query('SELECT * FROM all_departments', function (err, results) {
                 console.table(results);
+                capture();
               });
             
         } else if (userSelection == 'Add Department') {
