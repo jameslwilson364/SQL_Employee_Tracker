@@ -5,10 +5,10 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
-    console.log(`Connected to the books_db database.`)
+    console.log(`Connected to the employees_db database.`)
   );
 
   // capture collects user inputs for db queries and displays results
@@ -21,7 +21,7 @@ const db = mysql.createConnection(
             type: 'list',
             message: 'What would you like to do?',
             name: 'userSelection',
-            choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department'],
+            choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'Exit'],
         },
     ])
     .then((response) => {
@@ -38,18 +38,21 @@ const db = mysql.createConnection(
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
+            capture();
         } else if (userSelection == 'Update Employee Role') {
             console.info(userSelection);
-            
+            capture();            
         } else if (userSelection == 'View All Roles') {
             console.info(userSelection);
             db.query('SELECT * FROM all_roles', function (err, results) {
                 console.table(results);
                 capture();
               });
-            
         } else if (userSelection == 'Add Role') {
             console.info(userSelection);
+            addRole();
+            capture();
+            
             
         } else if (userSelection == 'View All Departments') {
             console.info(userSelection);
@@ -60,7 +63,11 @@ const db = mysql.createConnection(
             
         } else if (userSelection == 'Add Department') {
             console.info(userSelection);
+            capture();
             
+        } else if(userSelection == 'Exit'){
+          console.log('Thanks for using the not so creepy Employee Tracker');
+          return;
         }
 
     });
@@ -94,14 +101,44 @@ const db = mysql.createConnection(
         console.log(employeeFirstName);
         console.log(employeeLastName);
         console.log(employeeRole);
-        // db.query(`INSERT INTO all_employees(first_name, last_name, title, department, salary, manager)
-        //     VALUES (${employeeFirstName}, ${employeeLastName}, ${employeeRole}, 'Engineering', 125000, 'Vanessa');
-        //     `, function (err, results) {
-        //         console.log(results);
-        //     });
-        // db.query('SELECT * FROM all_employees', function (err, results) {
-        //     console.table(results);
-        // });  
+        db.query(`INSERT INTO all_employees(first_name, last_name, title, department, salary, manager)
+            VALUES ('${employeeFirstName}', '${employeeLastName}', '${employeeRole}', 'Engineering', 125000, 'Vanessa');`, function (err, results) {
+                console.table(results);
+            });
+        db.query('SELECT * FROM all_employees', function (err, results) {
+            console.table(results);
+        });  
+    })
+  }
+
+  // add a role
+  function addRole() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            message: 'What role would like to add?',
+            name: 'roleInput',
+        },
+        {
+            type: 'list',
+            message: 'What department does this role work in?',
+            name: 'roleDepartment',
+            choices: ['Engineering', 'Human Resources'],
+        },
+    ])
+    .then((response) => {
+        let roleInput = response.roleInput;
+        let roleDepartment = response.roleDepartment;
+        console.log(roleInput);
+        console.log(roleDepartment);
+        db.query(`INSERT INTO all_roles(job_title, department_name)
+            VALUES ('${roleInput}', '${roleDepartment}');`, function (err, results) {
+                console.table(results);
+            });
+        db.query('SELECT * FROM all_roles', function (err, results) {
+            console.table(results);
+        });  
     })
   }
   
