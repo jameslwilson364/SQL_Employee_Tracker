@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -33,37 +33,37 @@ const db = mysql.createConnection(
             console.info("You selected View All Employees");
             db.query('SELECT * FROM all_employees', function (err, results) {
                 console.table(results);
-                capture();
+                // capture();
               });
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
-            capture();
+            // capture();
         } else if (userSelection == 'Update Employee Role') {
             console.info(userSelection);
-            capture();            
+            updateRole();
+            // capture();            
         } else if (userSelection == 'View All Roles') {
             console.info(userSelection);
             db.query('SELECT * FROM all_roles', function (err, results) {
                 console.table(results);
-                capture();
+                // capture();
               });
         } else if (userSelection == 'Add Role') {
             console.info(userSelection);
             addRole();
-            capture();
-            
-            
+            // capture();
         } else if (userSelection == 'View All Departments') {
             console.info(userSelection);
             db.query('SELECT * FROM all_departments', function (err, results) {
                 console.table(results);
-                capture();
+                // capture();
               });
             
         } else if (userSelection == 'Add Department') {
             console.info(userSelection);
-            capture();
+            addDepartment();
+            // capture();
             
         } else if(userSelection == 'Exit'){
           console.log('Thanks for using the not so creepy Employee Tracker');
@@ -111,6 +111,38 @@ const db = mysql.createConnection(
     })
   }
 
+  // update an employees role
+  function updateRole() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            message: 'Whose role do you want to update? Please enter their employee_id number',
+            name: 'employeeId',
+        },
+        {
+          type: 'list',
+          message: 'Please select from the following roles?',
+          name: 'employeeNewRole',
+          choices: ['Project Manager', 'Human Resources Technician', 'HVAC Technician', 'Mechanical Engineer', 'Administrative Assistant'],
+      },
+    ])
+    .then((response) => {
+        let employeeId = response.employeeId;
+        let employeeNewRole = response.employeeNewRole;
+        console.log(employeeNewRole);
+        console.log(employeeId);
+        db.query(`UPDATE all_employees
+                  SET title = "${employeeNewRole}"
+                  WHERE employee_id = ${employeeId}`, function (err, results) {
+                console.table(results);
+            });
+        db.query('SELECT * FROM all_employees', function (err, results) {
+            console.table(results);
+        });  
+    })
+  }
+
   // add a role
   function addRole() {
     inquirer
@@ -126,17 +158,46 @@ const db = mysql.createConnection(
             name: 'roleDepartment',
             choices: ['Engineering', 'Human Resources'],
         },
+        {
+          type: 'input',
+          message: 'What is the salary of this role?',
+          name: 'roleSalary',
+        },
     ])
     .then((response) => {
         let roleInput = response.roleInput;
         let roleDepartment = response.roleDepartment;
+        let roleSalary = response.roleSalary;
         console.log(roleInput);
         console.log(roleDepartment);
-        db.query(`INSERT INTO all_roles(job_title, department_name)
-            VALUES ('${roleInput}', '${roleDepartment}');`, function (err, results) {
+        console.log(roleSalary);
+        db.query(`INSERT INTO all_roles(job_title, department_name, salary)
+            VALUES ('${roleInput}', '${roleDepartment}', '${roleSalary}');`, function (err, results) {
                 console.table(results);
             });
         db.query('SELECT * FROM all_roles', function (err, results) {
+            console.table(results);
+        });  
+    })
+  }
+
+  function addDepartment() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            message: 'What department would like to add?',
+            name: 'departmentInput',
+        },
+    ])
+    .then((response) => {
+        let departmentInput = response.departmentInput;
+        console.log(departmentInput);
+        db.query(`INSERT INTO all_departments(department_name)
+            VALUES ('${departmentInput}');`, function (err, results) {
+                console.table(results);
+            });
+        db.query('SELECT * FROM all_departments', function (err, results) {
             console.table(results);
         });  
     })
