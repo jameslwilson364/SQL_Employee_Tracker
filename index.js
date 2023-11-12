@@ -31,10 +31,9 @@ const db = mysql.createConnection(
 
         if (userSelection == 'View All Employees') {
             console.info("You selected View All Employees");
-            db.query('SELECT * FROM all_employees', function (err, results) {
-                console.table(results);
-                // capture();
-              });
+            viewAllEmployees();
+            
+            // capture();
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
@@ -45,32 +44,106 @@ const db = mysql.createConnection(
             // capture();            
         } else if (userSelection == 'View All Roles') {
             console.info(userSelection);
-            db.query('SELECT * FROM all_roles', function (err, results) {
-                console.table(results);
-                // capture();
-              });
+            viewAllRoles();
+            // capture();
         } else if (userSelection == 'Add Role') {
             console.info(userSelection);
             addRole();
             // capture();
         } else if (userSelection == 'View All Departments') {
             console.info(userSelection);
-            db.query('SELECT * FROM all_departments', function (err, results) {
-                console.table(results);
-                // capture();
-              });
-            
+            viewAllDepartments();
+            // capture();            
         } else if (userSelection == 'Add Department') {
             console.info(userSelection);
             addDepartment();
             // capture();
-            
         } else if(userSelection == 'Exit'){
           console.log('Thanks for using the not so creepy Employee Tracker');
           return;
         }
 
     });
+  }
+
+  // alternate while loop
+  // async function capture() {
+  //   console.log("Welcome to your not so creepy Employee Tracker!");
+  
+  //   // 
+  //   while (true)  {
+  //     const response = await inquirer.prompt([
+  //       {
+  //         type: 'list',
+  //         message: 'What would you like to do?',
+  //         name: 'userSelection',
+  //         choices: [
+  //           'View All Employees',
+  //           'Add Employee',
+  //           'Update Employee Role',
+  //           'View All Roles',
+  //           'Add Role',
+  //           'View All Departments',
+  //           'Add Department',
+  //           'Exit', 
+  //         ],
+  //       },
+  //     ]);
+  
+  //     console.log(response.userSelection);
+  
+  //     switch (response.userSelection) {
+  //       case 'View All Employees':
+  //         console.info("You selected View All Employees");
+  //         await viewAllEmployees();
+  //         break;
+  
+  //       case 'Add Employee':
+  //         console.info(response.userSelection);
+  //         await addEmployee();
+  //         break;
+  
+  //       case 'Update Employee Role':
+  //         console.info(response.userSelection);
+  //         updateRole();
+  //         break;
+  
+  //       case 'View All Roles':
+  //         console.info(response.userSelection);
+  //         await viewAllRoles();
+  //         break;
+  
+  //       case 'Add Role':
+  //         console.info(response.userSelection);
+  //         await addRole();
+  //         break;
+  
+  //       case 'View All Departments':
+  //         console.info(response.userSelection);
+  //         await viewAllDepartments();
+  //         break;
+  
+  //       case 'Add Department':
+  //         console.info(response.userSelection);
+  //         await addDepartment();
+  //         break;
+  
+  //       case 'Exit':
+  //         console.log('Exiting the Employee Tracker. Goodbye!');
+  //         return; 
+
+  //       default:
+  //         console.log('Invalid selection. Please choose a valid option.');
+  //     }
+  //   }
+  // }
+  
+  
+  // view all employees
+  function viewAllEmployees() {
+    db.query(`SELECT * FROM all_employees;`, function (err, results) {
+      console.table(results);
+  });
   }
 
   // function to add an employee to the db WIP
@@ -143,6 +216,12 @@ const db = mysql.createConnection(
     })
   }
 
+  // view all roles
+  function viewAllRoles() {
+    db.query(`SELECT * FROM all_roles;`, function (err, results) {
+      console.table(results);
+  });
+  }
   // add a role
   function addRole() {
     inquirer
@@ -181,6 +260,14 @@ const db = mysql.createConnection(
     })
   }
 
+  // view all departments
+  function viewAllDepartments() {
+    db.query(`SELECT * FROM all_departments;`, function (err, results) {
+      console.table(results);
+  });
+  }
+  
+  // add a department
   function addDepartment() {
     inquirer
     .prompt([
