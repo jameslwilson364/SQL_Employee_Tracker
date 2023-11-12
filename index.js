@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '@$@tuRn@T8itAN33!$',
+      password: '',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -13,6 +13,7 @@ const db = mysql.createConnection(
 
   // capture collects user inputs for db queries and displays results
   function capture() {
+    console.clear();
     console.log("Welcome to your not so creepy Employee Tracker!");
     // setup inquirer to capture user input
     inquirer
@@ -32,8 +33,7 @@ const db = mysql.createConnection(
         if (userSelection == 'View All Employees') {
             console.info("You selected View All Employees");
             viewAllEmployees();
-            
-            // capture();
+            capture();
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
@@ -65,79 +65,6 @@ const db = mysql.createConnection(
 
     });
   }
-
-  // alternate while loop
-  // async function capture() {
-  //   console.log("Welcome to your not so creepy Employee Tracker!");
-  
-  //   // 
-  //   while (true)  {
-  //     const response = await inquirer.prompt([
-  //       {
-  //         type: 'list',
-  //         message: 'What would you like to do?',
-  //         name: 'userSelection',
-  //         choices: [
-  //           'View All Employees',
-  //           'Add Employee',
-  //           'Update Employee Role',
-  //           'View All Roles',
-  //           'Add Role',
-  //           'View All Departments',
-  //           'Add Department',
-  //           'Exit', 
-  //         ],
-  //       },
-  //     ]);
-  
-  //     console.log(response.userSelection);
-  
-  //     switch (response.userSelection) {
-  //       case 'View All Employees':
-  //         console.info("You selected View All Employees");
-  //         await viewAllEmployees();
-  //         break;
-  
-  //       case 'Add Employee':
-  //         console.info(response.userSelection);
-  //         await addEmployee();
-  //         break;
-  
-  //       case 'Update Employee Role':
-  //         console.info(response.userSelection);
-  //         updateRole();
-  //         break;
-  
-  //       case 'View All Roles':
-  //         console.info(response.userSelection);
-  //         await viewAllRoles();
-  //         break;
-  
-  //       case 'Add Role':
-  //         console.info(response.userSelection);
-  //         await addRole();
-  //         break;
-  
-  //       case 'View All Departments':
-  //         console.info(response.userSelection);
-  //         await viewAllDepartments();
-  //         break;
-  
-  //       case 'Add Department':
-  //         console.info(response.userSelection);
-  //         await addDepartment();
-  //         break;
-  
-  //       case 'Exit':
-  //         console.log('Exiting the Employee Tracker. Goodbye!');
-  //         return; 
-
-  //       default:
-  //         console.log('Invalid selection. Please choose a valid option.');
-  //     }
-  //   }
-  // }
-  
   
   // view all employees
   function viewAllEmployees() {
