@@ -30,7 +30,7 @@ const db = mysql.createConnection(
         console.log(response.userSelection);
         const userSelection = response.userSelection
         console.log(userSelection);
-
+        // loop to control which db function is run cooresponding to user inputs
         if (userSelection == 'View All Employees') { 
             console.info("You selected View All Employees");
             viewAllEmployees();
@@ -38,7 +38,6 @@ const db = mysql.createConnection(
             console.log('\n');
             capture();
             console.log('\n');
-        
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
@@ -86,8 +85,6 @@ const db = mysql.createConnection(
           return;
         }
     }); 
-    
-    
   }
   
   // view all employees
