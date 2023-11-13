@@ -240,16 +240,16 @@ const db = mysql.createConnection(
             name: 'roleInput',
         },
         {
-            type: 'list',
-            message: 'What department does this role work in?',
-            name: 'roleDepartment',
-            choices: ['Engineering', 'Human Resources'],
-        },
-        {
           type: 'input',
           message: 'What is the salary of this role?',
           name: 'roleSalary',
         },
+        {
+          type: 'list',
+          message: 'What department does this role work in?',
+          name: 'roleDepartment',
+          choices: ['Engineering', 'Accounting', 'Human Resources'],
+      },
     ])
     .then((response) => {
         let roleInput = response.roleInput;
@@ -258,12 +258,27 @@ const db = mysql.createConnection(
         console.log(roleInput);
         console.log(roleDepartment);
         console.log(roleSalary);
-        db.query(`INSERT INTO all_roles(job_title, department_name, salary)
-            VALUES ('${roleInput}', '${roleDepartment}', '${roleSalary}');`, function (err, results) {
+        if (roleDepartment == 'Engineering') {
+          let roleDepartmentId = 1;
+          db.query(`INSERT INTO all_roles(job_title, salary, department_id)
+            VALUES ('${roleInput}', '${roleSalary}', '${roleDepartmentId}');`, function (err, results) {
                 console.table(results);
             });
-        db.query('SELECT * FROM all_roles', function (err, results) {
-            console.table(results);
+        } else if (roleDepartment == 'Accounting') {
+          let roleDepartmentId = 2;
+          db.query(`INSERT INTO all_roles(job_title, salary, department_id)
+            VALUES ('${roleInput}', '${roleSalary}', '${roleDepartmentId}');`, function (err, results) {
+                console.table(results);
+            });
+        } else if (roleDepartment == 'Human Resources') {
+          let roleDepartmentId = 3;
+          db.query(`INSERT INTO all_roles(job_title, salary, department_id)
+            VALUES ('${roleInput}', '${roleSalary}', '${roleDepartmentId}');`, function (err, results) {
+                console.table(results);
+            });
+        }
+        db.query(`SELECT * FROM all_roles;`, function (err, results) {
+          console.table(results);
         });  
     })
   }
@@ -288,8 +303,8 @@ const db = mysql.createConnection(
     .then((response) => {
         let departmentInput = response.departmentInput;
         console.log(departmentInput);
-        db.query(`INSERT INTO all_departments(department_name)
-            VALUES ('${departmentInput}');`, function (err, results) {
+        db.query(`INSERT INTO all_departments(department_name, manager_name)
+            VALUES ('${departmentInput}', 'Megan');`, function (err, results) {
                 console.table(results);
             });
         db.query('SELECT * FROM all_departments', function (err, results) {
