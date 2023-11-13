@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -13,7 +13,7 @@ const db = mysql.createConnection(
 
   // capture collects user inputs for db queries and displays results
   function capture() {
-    console.clear();
+    
     console.log("Welcome to your not so creepy Employee Tracker!");
     // setup inquirer to capture user input
     inquirer
@@ -23,6 +23,7 @@ const db = mysql.createConnection(
             message: 'What would you like to do?',
             name: 'userSelection',
             choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'Exit'],
+            
         },
     ])
     .then((response) => {
@@ -33,7 +34,8 @@ const db = mysql.createConnection(
         if (userSelection == 'View All Employees') {
             console.info("You selected View All Employees");
             viewAllEmployees();
-            capture();
+            // console.log('Returning you to the main menu');
+            // capture();
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
@@ -62,15 +64,16 @@ const db = mysql.createConnection(
           console.log('Thanks for using the not so creepy Employee Tracker');
           return;
         }
-
-    });
+    }); 
+    
+    
   }
   
   // view all employees
   function viewAllEmployees() {
     db.query(`SELECT * FROM all_employees;`, function (err, results) {
       console.table(results);
-  });
+    });
   }
 
   // function to add an employee to the db WIP
@@ -223,20 +226,4 @@ const db = mysql.createConnection(
   }
 
   init();
-  // could get cute with graphic generator after init nice to have
-  // dropdown menu in inquirer
-  // dropdown contains 
-  // view all employees
-    // needs a table for all employees
-  // add employee
-    // pushes to employee table
-  // update employee role
-    // updates employee table
-  // view all roles
-    // needs a table for all roles that relates to employees and departments
-  // add role
-    // pushes to role table
-  // view all departments
-    // need a table for departments needs to relate to employees and roles
-  // add department
-    // pushes to the departments table
+ 
