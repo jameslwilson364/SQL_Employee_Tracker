@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -71,7 +71,22 @@ const db = mysql.createConnection(
   
   // view all employees
   function viewAllEmployees() {
-    db.query(`SELECT * FROM all_employees;`, function (err, results) {
+    db.query(`SELECT 
+    e.employee_id AS employee_id,
+    e.first_name AS first_name,
+    e.last_name AS last_name,
+    r.id AS role_id,
+    r.job_title AS job_title,
+    r.salary AS salary,
+    d.id AS department_id,
+    d.department_name AS department_name,
+    d.manager_name AS manager_name
+    FROM 
+    (all_employees AS e 
+    JOIN all_roles AS r
+    ON e.role_id = r.id)
+    JOIN all_departments AS d 
+    ON r.department_id = d.id;`, function (err, results) {
       console.table(results);
     });
   }
@@ -94,7 +109,7 @@ const db = mysql.createConnection(
             type: 'list',
             message: 'What is their role?',
             name: 'employeeRole',
-            choices: ['Project Manager', 'Human Resources Technician'],
+            choices: ['Project Manager', 'Accounts Manager', 'Human Resources Technician'],
         },
     ])
     .then((response) => {
@@ -104,12 +119,43 @@ const db = mysql.createConnection(
         console.log(employeeFirstName);
         console.log(employeeLastName);
         console.log(employeeRole);
-        db.query(`INSERT INTO all_employees(first_name, last_name, title, department, salary, manager)
-            VALUES ('${employeeFirstName}', '${employeeLastName}', '${employeeRole}', 'Engineering', 125000, 'Vanessa');`, function (err, results) {
-                console.table(results);
-            });
-        db.query('SELECT * FROM all_employees', function (err, results) {
+        if (employeeRole == 'Project Manager') {
+          let employeeRoleId = 1;
+          db.query(`INSERT INTO all_employees(first_name, last_name, role_id)
+            VALUES ('${employeeFirstName}', '${employeeLastName}', '${employeeRoleId}');`, function (err, results) {
             console.table(results);
+          });
+        } else if (employeeRole == 'Accounts Manager') {
+          let employeeRoleId = 2;
+          db.query(`INSERT INTO all_employees(first_name, last_name, role_id)
+            VALUES ('${employeeFirstName}', '${employeeLastName}', '${employeeRoleId}');`, function (err, results) {
+            console.table(results);
+          });
+        } else if (employeeRole == 'Human Resources Technician') {
+          let employeeRoleId = 3;
+          db.query(`INSERT INTO all_employees(first_name, last_name, role_id)
+            VALUES ('${employeeFirstName}', '${employeeLastName}', '${employeeRoleId}');`, function (err, results) {
+            console.table(results);
+          });
+        }
+        
+        db.query(`SELECT 
+          e.employee_id AS employee_id,
+          e.first_name AS first_name,
+          e.last_name AS last_name,
+          r.id AS role_id,
+          r.job_title AS job_title,
+          r.salary AS salary,
+          d.id AS department_id,
+          d.department_name AS department_name,
+          d.manager_name AS manager_name
+          FROM 
+          (all_employees AS e 
+          JOIN all_roles AS r
+          ON e.role_id = r.id)
+          JOIN all_departments AS d 
+          ON r.department_id = d.id;`, function (err, results) {
+          console.table(results);
         });  
     })
   }
@@ -127,7 +173,7 @@ const db = mysql.createConnection(
           type: 'list',
           message: 'Please select from the following roles?',
           name: 'employeeNewRole',
-          choices: ['Project Manager', 'Human Resources Technician', 'HVAC Technician', 'Mechanical Engineer', 'Administrative Assistant'],
+          choices: ['Project Manager', 'Human Resources Technician', 'Accounts Manager'],
       },
     ])
     .then((response) => {
@@ -135,13 +181,45 @@ const db = mysql.createConnection(
         let employeeNewRole = response.employeeNewRole;
         console.log(employeeNewRole);
         console.log(employeeId);
-        db.query(`UPDATE all_employees
-                  SET title = "${employeeNewRole}"
-                  WHERE employee_id = ${employeeId}`, function (err, results) {
+        if (employeeNewRole == 'Project Manager') {
+          let employeeNewRoleId = 1;
+          db.query(`UPDATE all_employees
+            SET role_id = "${employeeNewRoleId}"
+            WHERE employee_id = ${employeeId}`, function (err, results) {
+            console.table(results);
+            });
+        } else if (employeeNewRole == 'Accounts Manager') {
+          let employeeNewRoleId = 2;
+          db.query(`UPDATE all_employees
+          SET role_id = "${employeeNewRoleId}"
+          WHERE employee_id = ${employeeId}`, function (err, results) {
                 console.table(results);
             });
-        db.query('SELECT * FROM all_employees', function (err, results) {
+        } else if (employeeNewRole == 'Human Resources Technician') {
+          let employeeNewRoleId = 3;
+          db.query(`UPDATE all_employees
+            SET role_id = "${employeeNewRoleId}"
+            WHERE employee_id = ${employeeId}`, function (err, results) {
             console.table(results);
+          });
+        }
+        db.query(`SELECT
+          e.employee_id AS employee_id,
+          e.first_name AS first_name,
+          e.last_name AS last_name,
+          r.id AS role_id,
+          r.job_title AS job_title,
+          r.salary AS salary,
+          d.id AS department_id,
+          d.department_name AS department_name,
+          d.manager_name AS manager_name
+          FROM 
+          (all_employees AS e 
+          JOIN all_roles AS r
+          ON e.role_id = r.id)
+          JOIN all_departments AS d 
+          ON r.department_id = d.id;`, function (err, results) {
+          console.table(results);
         });  
     })
   }
