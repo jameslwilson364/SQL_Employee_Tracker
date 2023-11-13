@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -13,7 +13,7 @@ const db = mysql.createConnection(
 
   // capture collects user inputs for db queries and displays results
   function capture() {
-    
+    console.clear();
     console.log("Welcome to your not so creepy Employee Tracker!");
     // setup inquirer to capture user input
     inquirer
@@ -31,35 +31,56 @@ const db = mysql.createConnection(
         const userSelection = response.userSelection
         console.log(userSelection);
 
-        if (userSelection == 'View All Employees') {
+        if (userSelection == 'View All Employees') { 
             console.info("You selected View All Employees");
             viewAllEmployees();
-            // console.log('Returning you to the main menu');
-            // capture();
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');
+        
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
-            // capture();
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');
         } else if (userSelection == 'Update Employee Role') {
             console.info(userSelection);
             updateRole();
-            // capture();            
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');            
         } else if (userSelection == 'View All Roles') {
             console.info(userSelection);
             viewAllRoles();
-            // capture();
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');
         } else if (userSelection == 'Add Role') {
             console.info(userSelection);
             addRole();
-            // capture();
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');
         } else if (userSelection == 'View All Departments') {
             console.info(userSelection);
             viewAllDepartments();
-            // capture();            
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');           
         } else if (userSelection == 'Add Department') {
             console.info(userSelection);
             addDepartment();
-            // capture();
+            console.log('Returning you to the main menu');
+            console.log('\n');
+            capture();
+            console.log('\n');
         } else if(userSelection == 'Exit'){
           console.log('Thanks for using the not so creepy Employee Tracker');
           return;
@@ -312,7 +333,7 @@ const db = mysql.createConnection(
         });  
     })
   }
-  
+
   // launch the app
   function init() {
     capture();
