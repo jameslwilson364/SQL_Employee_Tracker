@@ -5,7 +5,7 @@ const db = mysql.createConnection(
     {
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: '@$@tuRn@T8itAN33!$',
       database: 'employees_db'
     },
     console.log(`Connected to the employees_db database.`)
@@ -34,57 +34,30 @@ const db = mysql.createConnection(
         if (userSelection == 'View All Employees') { 
             console.info("You selected View All Employees");
             viewAllEmployees();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');
         } else if (userSelection == 'Add Employee') {
             console.info(userSelection);
             addEmployee();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');
         } else if (userSelection == 'Update Employee Role') {
             console.info(userSelection);
             updateRole();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');            
         } else if (userSelection == 'View All Roles') {
             console.info(userSelection);
             viewAllRoles();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');
         } else if (userSelection == 'Add Role') {
             console.info(userSelection);
             addRole();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');
         } else if (userSelection == 'View All Departments') {
             console.info(userSelection);
-            viewAllDepartments();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');           
+            viewAllDepartments();        
         } else if (userSelection == 'Add Department') {
             console.info(userSelection);
             addDepartment();
-            console.log('Returning you to the main menu');
-            console.log('\n');
-            capture();
-            console.log('\n');
         } else if(userSelection == 'Exit'){
           console.log('Thanks for using the not so creepy Employee Tracker');
           return;
         }
-    }); 
+        
+    });  
   }
   
   // view all employees
@@ -107,6 +80,10 @@ const db = mysql.createConnection(
     ON r.department_id = d.id;`, function (err, results) {
       console.table(results);
     });
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
   }
 
   // function to add an employee to the db WIP
@@ -175,6 +152,10 @@ const db = mysql.createConnection(
           ON r.department_id = d.id;`, function (err, results) {
           console.table(results);
         });  
+          console.log('Returning you to the main menu');
+          console.log('\n');
+          capture();
+          console.log('\n');
     })
   }
 
@@ -239,7 +220,12 @@ const db = mysql.createConnection(
           ON r.department_id = d.id;`, function (err, results) {
           console.table(results);
         });  
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
     })
+   
   }
 
   // view all roles
@@ -247,6 +233,10 @@ const db = mysql.createConnection(
     db.query(`SELECT * FROM all_roles;`, function (err, results) {
       console.table(results);
   });
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
   }
   // add a role
   function addRole() {
@@ -298,7 +288,12 @@ const db = mysql.createConnection(
         db.query(`SELECT * FROM all_roles;`, function (err, results) {
           console.table(results);
         });  
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
     })
+    
   }
 
   // view all departments
@@ -306,6 +301,10 @@ const db = mysql.createConnection(
     db.query(`SELECT * FROM all_departments;`, function (err, results) {
       console.table(results);
   });
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
   }
   
   // add a department
@@ -328,7 +327,12 @@ const db = mysql.createConnection(
         db.query('SELECT * FROM all_departments', function (err, results) {
             console.table(results);
         });  
+    console.log('Returning you to the main menu');
+    console.log('\n');
+    capture();
+    console.log('\n');
     })
+    
   }
 
   // launch the app
