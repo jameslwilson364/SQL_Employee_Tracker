@@ -14,6 +14,8 @@
 <a id="installation"></a>
 ## Installation Instructions
 - This app is run from the command line.  Ensure all required libraries are imported via npm and the the db files have been properly sourced.
+- Also note this application will require your unique root login in password for mysql if you want to run a local instance.
+- The password field in the index.js (line 8) is intentionally blank.
 
 <a id="usage"></a>
 ## Usage Information
